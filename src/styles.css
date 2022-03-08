@@ -1,0 +1,54 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+    background-color: #282c34;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+}
+
+.MenuSettings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.MenuSettingsSearch {
+    margin-top: 2rem;
+}
+
+.ListReviewers {
+    color: #fff;
+    margin-top: 2rem;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.row {
+    display: flex;
+    margin-top: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.w-50 {
+    width: 50%;
+    text-align: left;
+}
+
+.d-block {
+    display: block;
+}
+
+.d-none {
+    display: none;
+}
