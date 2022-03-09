@@ -4,16 +4,20 @@ import ReactDOM from "react-dom";
 const MenuSettings: FC = () => {
     const [isVisibleSettings, setIsVisibleSettings] = useState(false);
 
-    const inputLogin = useRef(null);
-    const inputRepo = useRef(null);
-    const inputBlacklist = useRef(null);
+    const inputLogin = useRef<HTMLInputElement>(null);
+    const inputRepo = useRef<HTMLInputElement>(null);
+    const inputBlacklist = useRef<HTMLTextAreaElement>(null);
 
     const listReviewers = useRef(null);
 
     const findReviewer = () => {
-        let login = inputLogin.current.value;
-        let repo = inputRepo.current.value;
-        let blacklist = inputBlacklist.current.value.split(' ').join('').split(';');
+
+        let login = inputLogin?.current?.value;
+        let repo = inputRepo?.current?.value;
+        let blacklist = [''];
+        if (inputBlacklist?.current?.value) {
+            blacklist = inputBlacklist?.current?.value.split(' ').join('').split(';');
+        }
 
         fetch(`https://api.github.com/repos/${login}/${repo}/contributors`)
             .then((response) => response.json())
