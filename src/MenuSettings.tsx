@@ -13,7 +13,7 @@ const MenuSettings: FC = () => {
     const findReviewer = () => {
         let login = inputLogin.current.value;
         let repo = inputRepo.current.value;
-        let blacklist = inputBlacklist.current.value.split(';');
+        let blacklist = inputBlacklist.current.value.split(' ').join('').split(';');
 
         fetch(`https://api.github.com/repos/${login}/${repo}/contributors`)
             .then((response) => response.json())
@@ -28,6 +28,7 @@ const MenuSettings: FC = () => {
                     while (blacklist.includes(reviewer["login"])) {
                         reviewer = response[ Math.floor(Math.random() * response.length)];
                     }
+
                     let reviewerHTML = (
                         <div>
                             <div>Возможный ревьюер:</div>
@@ -83,6 +84,15 @@ const MenuSettings: FC = () => {
                             <div className="w-50">
                                 <textarea rows={5} ref={inputBlacklist}>
                                     brson;
+                                    bors;
+                                    alexcrichton;
+                                    Centril;
+                                    GuillaumeGomez;
+                                    Manishearth;
+                                    pcwalton;
+                                    RalfJung;
+                                    bjorn3;
+                                    JohnTitor;
                                     nikomatsakis;
                                     eddyb;
                                     steveklabnik;
