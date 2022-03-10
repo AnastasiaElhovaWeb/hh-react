@@ -1,7 +1,13 @@
 import React, { useState, useRef, FC } from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
+import { useDispatch, Provider } from "react-redux";
 
-const MenuSettings: FC = () => {
+import store from "../store";
+import findUser from "../models/findUser";
+
+import "../styles.css";
+
+const AppFindUser: FC = () => {
     const [isVisibleSettings, setIsVisibleSettings] = useState(false);
 
     const inputLogin = useRef<HTMLInputElement>(null);
@@ -10,47 +16,28 @@ const MenuSettings: FC = () => {
 
     const listReviewers = useRef(null);
 
+    const dispatch = useDispatch();
+
     const findReviewer = () => {
 
-        let login = inputLogin?.current?.value;
-        let repo = inputRepo?.current?.value;
+        let login = '';
+        if (inputLogin?.current?.value) {
+            login = inputLogin?.current?.value;
+        }
+
+        let repo = '';
+        if (inputRepo?.current?.value) {
+            repo = inputRepo?.current?.value;
+        }
+
         let blacklist = [''];
         if (inputBlacklist?.current?.value) {
             blacklist = inputBlacklist?.current?.value.split(' ').join('').split(';');
         }
 
-        fetch(`https://api.github.com/repos/${login}/${repo}/contributors`)
-            .then((response) => response.json())
-            .then((response) => {
-                if (response.message) {
-                    ReactDOM.render(
-                        <div>{response.message}</div>,
-                        document.getElementById("listReviewers")
-                    );
-                } else {
-                    let reviewer = response[ Math.floor(Math.random() * response.length)];
-                    while (blacklist.includes(reviewer["login"])) {
-                        reviewer = response[ Math.floor(Math.random() * response.length)];
-                    }
-
-                    let reviewerHTML = (
-                        <div>
-                            <div>Возможный ревьюер:</div>
-                            <div className="row">
-                                <img width={100} height={100} src={reviewer["avatar_url"]}/>
-                                <h2>{reviewer["login"]}</h2>
-                                <a href={reviewer["html_url"]}>Профиль</a>
-                            </div>
-                        </div>
-                    );
-                    ReactDOM.render(
-                        reviewerHTML,
-                        document.getElementById("listReviewers")
-                    );
-                }
-
-            });
+        dispatch(findUser(login, repo, blacklist));
     };
+
 
     return (
         <div className="App">
@@ -70,7 +57,7 @@ const MenuSettings: FC = () => {
                                 <label>Login</label>
                             </div>
                             <div className="w-50">
-                                <input type="text" value="rust-lang" ref={inputLogin}/>
+                                <input type="text" placeholder="rust-lang" ref={inputLogin}/>
                             </div>
                         </div>
                         <div className="row">
@@ -110,8 +97,9 @@ const MenuSettings: FC = () => {
             <div className="MenuSettingsSearch">
                 <button
                     type="button"
-
-                    onClick={findReviewer}
+                    onClick={() => {
+                        findReviewer();
+                    }}
                 >
                     Найти ревьюера
                 </button>
@@ -121,4 +109,12 @@ const MenuSettings: FC = () => {
     );
 };
 
-export default MenuSettings;
+
+const rootElement = document.getElementById("root");
+
+render(
+    <Provider store={store}>
+        <AppFindUser />
+    </Provider>,
+    rootElement
+);
