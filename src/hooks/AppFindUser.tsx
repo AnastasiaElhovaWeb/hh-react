@@ -19,22 +19,12 @@ const AppFindUser: FC = () => {
     const dispatch = useDispatch();
 
     const findReviewer = () => {
-
-        let login = '';
-        if (inputLogin?.current?.value) {
-            login = inputLogin?.current?.value;
-        }
-
-        let repo = '';
-        if (inputRepo?.current?.value) {
-            repo = inputRepo?.current?.value;
-        }
-
+        let login = inputLogin?.current?.value || '';
+        let repo = inputRepo?.current?.value || '';
         let blacklist = [''];
         if (inputBlacklist?.current?.value) {
             blacklist = inputBlacklist?.current?.value.split(' ').join('').split(';');
         }
-
         dispatch(findUser(login, repo, blacklist));
     };
 
@@ -86,9 +76,7 @@ const AppFindUser: FC = () => {
             <div className="MenuSettingsSearch">
                 <button
                     type="button"
-                    onClick={() => {
-                        findReviewer();
-                    }}
+                    onClick={findReviewer}
                 >
                     Найти ревьюера
                 </button>
