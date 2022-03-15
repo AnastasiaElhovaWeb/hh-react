@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import { useDispatch, Provider } from "react-redux";
 
 import store from "../store";
-import findUser from "../models/findUser";
+import findUser from "../hooks/findUser";
 
 import "../styles.css";
 

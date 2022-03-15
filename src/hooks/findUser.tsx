@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import store from "../store";
-import {addReviewer} from "./addReviewer";
+import {addReviewer} from "../models/addReviewer";
 
 const changeStore = (user: object) => {
     const { reviewers } = store.getState();
