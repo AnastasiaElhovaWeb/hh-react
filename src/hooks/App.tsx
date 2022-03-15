@@ -84,8 +84,8 @@ const App = () => {
             <div className="ListReviewers">
                 <div>Возможные ревьюеры:</div>
                 {users.length > 0 &&
-                users.map(({ login, avatar_url, html_url }) => (
-                    <div className="row">
+                users.map(({ id, login, avatar_url, html_url }) => (
+                    <div className="row" key={id}>
                         <img width={100} height={100} src={avatar_url}/>
                         <h2>{login}</h2>
                         <a href={html_url}>Профиль</a>
