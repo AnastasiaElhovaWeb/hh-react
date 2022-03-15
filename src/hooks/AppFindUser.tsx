@@ -57,7 +57,7 @@ const AppFindUser: FC = () => {
                                 <label>Login</label>
                             </div>
                             <div className="w-50">
-                                <input type="text" placeholder="rust-lang" ref={inputLogin}/>
+                                <input type="text" placeholder="login" ref={inputLogin} defaultValue="rust-lang"/>
                             </div>
                         </div>
                         <div className="row">
@@ -65,7 +65,7 @@ const AppFindUser: FC = () => {
                                 <label>Repo</label>
                             </div>
                             <div className="w-50">
-                                <input type="text" placeholder="rust" ref={inputRepo}/>
+                                <input type="text" placeholder="repo" ref={inputRepo} defaultValue="rust"/>
                             </div>
                         </div>
                         <div className="row">
@@ -73,21 +73,10 @@ const AppFindUser: FC = () => {
                                 <label>BlackList</label>
                             </div>
                             <div className="w-50">
-                                <textarea rows={5} ref={inputBlacklist}>
-                                    brson;
-                                    bors;
-                                    alexcrichton;
-                                    Centril;
-                                    GuillaumeGomez;
-                                    Manishearth;
-                                    pcwalton;
-                                    RalfJung;
-                                    bjorn3;
-                                    JohnTitor;
-                                    nikomatsakis;
-                                    eddyb;
-                                    steveklabnik;
-                                    nrc;
+                                <textarea rows={5} ref={inputBlacklist}
+                                    defaultValue="brson; bors; alexcrichton; Centril; GuillaumeGomez; Manishearth; pcwalton;
+                                                RalfJung; bjorn3; JohnTitor; nikomatsakis; eddyb; steveklabnik; nrc;">
+
                                 </textarea>
                             </div>
                         </div>
