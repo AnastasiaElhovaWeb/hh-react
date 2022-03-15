@@ -1,21 +1,17 @@
-import React, { useState, useRef, FC } from "react";
+import React, {useRef, useState} from "react";
 import { render } from "react-dom";
-import { useDispatch, Provider } from "react-redux";
-
+import { useSelector, useDispatch, Provider } from "react-redux";
 import store from "../store";
-import findUser from "../hooks/findUser";
-
+import findUser from "./findUser";
 import "../styles.css";
 
-const AppFindUser: FC = () => {
+const App = () => {
     const [isVisibleSettings, setIsVisibleSettings] = useState(false);
-
     const inputLogin = useRef<HTMLInputElement>(null);
     const inputRepo = useRef<HTMLInputElement>(null);
     const inputBlacklist = useRef<HTMLTextAreaElement>(null);
-
-    const listReviewers = useRef(null);
-
+    const users = useSelector(({ gitHubUsers }) => Object.values(gitHubUsers));
+    const errors = useSelector(({ fetchErrors }) => Object.values(fetchErrors));
     const dispatch = useDispatch();
 
     const findReviewer = () => {
@@ -27,7 +23,6 @@ const AppFindUser: FC = () => {
         }
         dispatch(findUser(login, repo, blacklist));
     };
-
 
     return (
         <div className="App">
@@ -64,7 +59,7 @@ const AppFindUser: FC = () => {
                             </div>
                             <div className="w-50">
                                 <textarea rows={5} ref={inputBlacklist}
-                                    defaultValue="brson; bors; alexcrichton; Centril; GuillaumeGomez; Manishearth; pcwalton;
+                                          defaultValue="brson; bors; alexcrichton; Centril; GuillaumeGomez; Manishearth; pcwalton;
                                                 RalfJung; bjorn3; JohnTitor; nikomatsakis; eddyb; steveklabnik; nrc;">
 
                                 </textarea>
@@ -81,17 +76,31 @@ const AppFindUser: FC = () => {
                     Найти ревьюера
                 </button>
             </div>
-            <div className="ListReviewers" ref={listReviewers} id="listReviewers"></div>
+            {errors.length > 0 &&
+            <div className="ListErrors">
+                { errors[errors.length-1]['message'] }
+            </div>
+            }
+            <div className="ListReviewers">
+                <div>Возможные ревьюеры:</div>
+                {users.length > 0 &&
+                users.map(({ login, avatar_url, html_url }) => (
+                    <div className="row">
+                        <img width={100} height={100} src={avatar_url}/>
+                        <h2>{login}</h2>
+                        <a href={html_url}>Профиль</a>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
-
 
 const rootElement = document.getElementById("root");
 
 render(
     <Provider store={store}>
-        <AppFindUser />
+        <App />
     </Provider>,
     rootElement
 );

@@ -1,3 +1,1 @@
-//import "./hooks/AppFindUser";
-
-import "./hooks/middlewareExample";
+import "./hooks/App";
